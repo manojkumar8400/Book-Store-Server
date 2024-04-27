@@ -1,0 +1,11 @@
+{
+  "name": "food-ordering",
+  "version": "1.0.0",
+  "description": "It is a simple food ordering server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Manoj kumar",
+  "license": "ISC"
+}
