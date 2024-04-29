@@ -6,8 +6,16 @@ const app = express()
 //  Config
 dotenv.config({ path: "src/config/config.env" });
 
-console.log(process.env.PORT, 'index');
-connectDataBase()
+// use this for take json data via body
+app.use(express.json());
+
+// Routes
+const user = require("./src/routes/userRoute");
+
+app.use("/api/v1",user);
+
+// Connect DB
+connectDataBase();
 
 const server = app.listen(process.env.PORT, () => {
     console.log(`server is working on http://localhost:${process.env.PORT}`);
