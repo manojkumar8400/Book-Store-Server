@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
   },
   token: {
     type: String,
+  },
+  userId : {
+    type: Number,
+    required: true,
   }
 });
 

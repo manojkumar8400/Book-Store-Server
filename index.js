@@ -6,13 +6,16 @@ const app = express()
 //  Config
 dotenv.config({ path: "src/config/config.env" });
 
-// use this for take json data via body
+// use this for take json data
 app.use(express.json());
 
 // Routes
 const user = require("./src/routes/userRoute");
+const restaurent = require("./src/routes/restaurentRoute");
 
 app.use("/api/v1",user);
+
+app.use("/api/v1", restaurent);
 
 // Connect DB
 connectDataBase();

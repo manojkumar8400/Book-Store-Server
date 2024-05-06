@@ -6,6 +6,7 @@ exports.registerUser = catchAsyncErrors(async (req, res) => {
   const content = req.body
 
   let user = await User.findOne({ email: content.email })
+  let userId = Date.now();
 
   if (user) {
     return res.status(409).json({
@@ -14,7 +15,7 @@ exports.registerUser = catchAsyncErrors(async (req, res) => {
     })
   }
   user = await User.create({
-    ...content,
+    ...content, userId: userId
   })
   const { email, password, _id } = user
 
