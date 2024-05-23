@@ -1,5 +1,5 @@
 const catchAsyncErrors = require('../middleware/catchAsyncErrors')
-const AddToCart = require('../models/addToCart')
+const AddToCart = require('../models/addToCartModel')
 
 exports.addToCart = catchAsyncErrors(async (req, res) => {
   
@@ -15,7 +15,9 @@ exports.addToCart = catchAsyncErrors(async (req, res) => {
 })
 
 exports.cartList = catchAsyncErrors(async (req, res) => {
-  const cartList = await AddToCart.find()
+  
+  const userId = req.query.userId
+  const cartList = await AddToCart.find({ userId: userId});
 
   return res.status(200).json({
     statusCode: 200,
