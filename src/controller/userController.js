@@ -66,3 +66,15 @@ exports.userLogin = catchAsyncErrors(async (req, res) => {
     })
   }
 })
+
+exports.userInfo = catchAsyncErrors( async (req, res) => {
+
+  const token = req.query.token
+  const userInfo = await User.findOne({ token: token}).select('-token');;
+
+  return res.status(200).json({
+    statusCode: 200,
+    message: 'User data fetched successfully!',
+    userInfo
+  })
+})

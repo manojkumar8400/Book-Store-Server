@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
   userId : {
     type: Number,
     required: true,
+  },
+  isAdmin :{
+    type: Boolean,
+    required: true,
+    default: false, 
   }
 });
 

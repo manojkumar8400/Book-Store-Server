@@ -13,12 +13,15 @@ app.use(express.json());
 const user = require("./src/routes/userRoute");
 const restaurent = require("./src/routes/restaurentRoute");
 const addToCart = require("./src/routes/cartRoute");
+const addFavRest = require("./src/routes/favRestRoute");
 
 app.use("/api/v1",user);
 
 app.use("/api/v1", restaurent);
 
 app.use("/api/v1", addToCart);
+
+app.use("/api/v1", addFavRest);
 
 // Connect DB
 connectDataBase();

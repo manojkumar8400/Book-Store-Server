@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 
-const addToCartSchema = new mongoose.Schema({
+const favRestaurantSchema = new mongoose.Schema({
     name: {
         type: String,
+        required: true,
+    },
+    userId: {
+        type: Number,
         required: true,
     },
     // imgs: {
@@ -45,4 +49,4 @@ const addToCartSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('AddToCart', addToCartSchema);
+module.exports = mongoose.model('FavRestaurant', favRestaurantSchema);
