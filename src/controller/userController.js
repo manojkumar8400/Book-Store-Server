@@ -75,6 +75,6 @@ exports.userInfo = catchAsyncErrors( async (req, res) => {
   return res.status(200).json({
     statusCode: 200,
     message: 'User data fetched successfully!',
-    userInfo
+    data:userInfo
   })
 })
