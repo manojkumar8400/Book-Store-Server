@@ -29,7 +29,7 @@ exports.restaurentList = catchAsyncErrors(async (req, res) => {
 
     return res.status(200).json({
         statusCode: 200,
-        restraurent,
+        data:restraurent,
         message: "Data Fetched successfully"
     });
 });
@@ -48,7 +48,7 @@ exports.searchRestaurent = catchAsyncErrors(async (req, res) => {
     
     return res.status(200).json({
         statusCode: 200,
-        content,
+        data:content,
         message: "Data fetched successfully"
     });
 });

@@ -14,6 +14,7 @@ const user = require("./src/routes/userRoute");
 const restaurent = require("./src/routes/restaurentRoute");
 const addToCart = require("./src/routes/cartRoute");
 const addFavRest = require("./src/routes/favRestRoute");
+const addResReq = require("./src/routes/addResReqRoute");
 
 app.use("/api/v1",user);
 
@@ -22,6 +23,8 @@ app.use("/api/v1", restaurent);
 app.use("/api/v1", addToCart);
 
 app.use("/api/v1", addFavRest);
+
+app.use("/api/v1", addResReq);
 
 // Connect DB
 connectDataBase();
