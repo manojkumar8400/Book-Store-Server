@@ -29,6 +29,7 @@ exports.favRestList = catchAsyncErrors(async (req, res) => {
 exports.removeFromFavList = catchAsyncErrors(async (req, res) => {
   const {_id, userId} = req.query;
 
+  // Check in DB
   const favListRest = await FavRest.findOne({ _id: _id, userId: userId })
 
   if (!favListRest) {

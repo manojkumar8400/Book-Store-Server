@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken')
 
 exports.registerUser = catchAsyncErrors(async (req, res) => {
   const content = req.body
-
+  
+  // Check in DB before creating new user
   let user = await User.findOne({ email: content.email })
   let userId = Date.now();
 
@@ -19,6 +20,7 @@ exports.registerUser = catchAsyncErrors(async (req, res) => {
   })
   const { email, password, _id } = user
 
+  // Create jwt token
   const token = jwt.sign({ email, password, _id }, process.env.secretKey, {
     expiresIn: '30d',
   })
@@ -34,11 +36,12 @@ exports.registerUser = catchAsyncErrors(async (req, res) => {
 })
 
 exports.userLogin = catchAsyncErrors(async (req, res) => {
-  let user = await User.findOne({ email: req.body.email }).select('+password') // schema m password select false kiya tha isiliye yahan select method ka use kiya h
+
+  let user = await User.findOne({ email: req.body.email }).select('+password') // Password select was set false in schema so I used select method here
   if (user && req.body.password == user.password && user.token) {
     const { token } = user;
     try {
-      // Verify the token using jwt.verify method
+      // Verify the token
       jwt.verify(user.token, process.env.secretKey)
       return res.status(200).json({
         statusCode: 200,
@@ -46,6 +49,7 @@ exports.userLogin = catchAsyncErrors(async (req, res) => {
         message: 'Login successfully',
       })
     } catch (error) {
+      // If the token is invalid then create a new one
       const token = jwt.sign({ email: user.email, password: user.password, _id:user._id }, process.env.secretKey, {
         expiresIn: '30d',
       })
@@ -70,7 +74,7 @@ exports.userLogin = catchAsyncErrors(async (req, res) => {
 exports.userInfo = catchAsyncErrors( async (req, res) => {
 
   const token = req.query.token
-  const userInfo = await User.findOne({ token: token}).select('-token');;
+  const userInfo = await User.findOne({ token: token}).select('-token');
 
   return res.status(200).json({
     statusCode: 200,

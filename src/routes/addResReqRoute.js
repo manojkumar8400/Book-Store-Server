@@ -1,16 +1,17 @@
 const express = require('express');
 const verifyToken = require('../middleware/verifyToken');
-const { addRestReq, addRestReqList, removeResReq, requestApproove, requestDecline } = require('../controller/addRestReqController');
+const { restReq, restReqList, resReqRemove, resReqApproove, resReqDecline } = require('../controller/addRestReqController');
+const upload = require('../middleware/multer');
 const router = express.Router(); 
 
-router.post('/addResReq', verifyToken, addRestReq);
+router.post('/addResReq', verifyToken, upload.single('image'), restReq); // Client
 
-router.get('/restReqList', verifyToken, addRestReqList );
+router.get('/restReqList', verifyToken, restReqList );   // Client and Admin  
 
-router.post('/removeRequest', verifyToken, removeResReq);
+router.post('/removeRequest', verifyToken, resReqRemove); // Client can remove our request
 
-router.post('/requestApproove', verifyToken, requestApproove);
+router.post('/requestApproove/:_id', verifyToken, resReqApproove);  // Admin
 
-router.post('/requestDecline', verifyToken, requestDecline);
+router.post('/requestDecline/:_id', verifyToken, resReqDecline);    // Admin
 
 module.exports = router; 

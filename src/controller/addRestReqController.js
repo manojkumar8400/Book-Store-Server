@@ -2,9 +2,10 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors')
 const AddResReq = require('../models/addRestReqModel')
 const Restaurent = require('../models/restaurentModel')
 
-exports.addRestReq = catchAsyncErrors(async (req, res) => {
+exports.restReq = catchAsyncErrors(async (req, res) => {
   const content = req.body
 
+  // Check in DB before listing restaurent
   const registeredRestaurant = await Restaurent.findOne({
     name: content.name,
     location: content.location,
@@ -26,7 +27,7 @@ exports.addRestReq = catchAsyncErrors(async (req, res) => {
   })
 })
 
-exports.addRestReqList = catchAsyncErrors(async (req, res) => {
+exports.restReqList = catchAsyncErrors(async (req, res) => {
   const { userId, isAdmin } = req.query
   let reqrestList = []
   if (userId && isAdmin == 'false') {
@@ -42,7 +43,7 @@ exports.addRestReqList = catchAsyncErrors(async (req, res) => {
   })
 })
 
-exports.removeResReq = catchAsyncErrors(async (req, res) => {
+exports.resReqRemove = catchAsyncErrors(async (req, res) => {
   const _id = req.query._id
 
   const resReq = await AddResReq.findById({ _id: _id })
@@ -62,8 +63,9 @@ exports.removeResReq = catchAsyncErrors(async (req, res) => {
   })
 })
 
-exports.requestApproove = catchAsyncErrors(async (req, res) => {
+exports.resReqApproove = catchAsyncErrors(async (req, res) => {
   const content = req.body
+  const _id = req.params._id
 
   const registeredRestaurant = await Restaurent.findOne({
     name: content.name,
@@ -77,19 +79,22 @@ exports.requestApproove = catchAsyncErrors(async (req, res) => {
     })
   }
 
-  const resReq = await Restaurent.create(content)
+  await Restaurent.create(content)
+
+  await AddResReq.findByIdAndUpdate(
+    _id,
+    { status: "Approoved" }
+  )
 
   return res.status(201).json({
     statusCode: 201,
-    message: 'Resquest registered successfully',
-    data: resReq,
+    message: 'Resquest approoved successfully',
   })
 })
 
-exports.requestDecline = catchAsyncErrors(async (req, res) => {
-  const { _id } = req.query
+exports.resReqDecline = catchAsyncErrors(async (req, res) => {
+  const _id = req.params._id
   const { status } = req.body
-  console.log(_id)
 
   const isIdAvailable = await AddResReq.findById({ _id: _id })
 
