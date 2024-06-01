@@ -10,7 +10,6 @@ exports.addToCart = catchAsyncErrors(async (req, res) => {
   return res.status(201).json({
     statusCode: 201,
     message: 'Data added successfully',
-    cart,
   })
 })
 
@@ -22,13 +21,14 @@ exports.cartList = catchAsyncErrors(async (req, res) => {
   return res.status(200).json({
     statusCode: 200,
     message: 'Data Fetched successfully',
-    data:cartList,
+    data: cartList,
   })
 })
 
 exports.removeFromCart = catchAsyncErrors(async (req, res) => {
   const itemId = req.query._id
 
+  // Check in DB
   const cartItem = await AddToCart.findById({ _id: itemId })
 
   if (!cartItem) {
@@ -42,6 +42,6 @@ exports.removeFromCart = catchAsyncErrors(async (req, res) => {
 
   res.status(200).json({
     statusCode: 200,
-    message: 'Item removed from cart successfully',
+    message: 'Item removed successfully',
   })
 })

@@ -1,6 +1,6 @@
 const express = require('express');
 const verifyToken = require('../middleware/verifyToken');
-const { favRest, favRestList, removeFromFavList } = require('../controller/fevRestController');
+const { favRest, favRestList, removeFromFavList } = require('../controller/favRestController');
 const router = express.Router(); 
 
 router.post('/addFavRest', verifyToken, favRest);

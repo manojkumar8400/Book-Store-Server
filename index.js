@@ -8,6 +8,7 @@ dotenv.config({ path: "src/config/config.env" });
 
 // use this for take json data
 app.use(express.json());
+app.use(express.static('public'))
 
 // Routes
 const user = require("./src/routes/userRoute");

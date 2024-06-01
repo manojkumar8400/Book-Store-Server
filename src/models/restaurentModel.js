@@ -5,9 +5,9 @@ const restaurantSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    // imgs: {
-
-    // },
+    image: {
+        type: String,
+    },
     menu: {
         type: [{
             name: String,

@@ -9,9 +9,9 @@ const favRestaurantSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    // imgs: {
-
-    // },
+    image: {
+        type: String,
+    },
     menu: {
         type: [{
             name: String,
