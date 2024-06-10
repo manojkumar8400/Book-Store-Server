@@ -1,3 +1,7 @@
+/*
+1. No validation for inputs. Validate and sanitize inputs. Security issue ho sakte hai.
+2. Thode naming convention ke issues hai. for eg: either restReq rakho ya resReq rakho..Check inline for more reviews.
+*/
 const catchAsyncErrors = require('../middleware/catchAsyncErrors')
 const AddResReq = require('../models/addRestReqModel')
 const Restaurent = require('../models/restaurentModel')
@@ -30,6 +34,7 @@ exports.restReq = catchAsyncErrors(async (req, res) => {
 exports.restReqList = catchAsyncErrors(async (req, res) => {
   const { userId, isAdmin } = req.query
   let reqrestList = []
+  //DP: Sirf isAdmin se hi pata chal jayega ki admin hai na nahi. Why do we need to check userID?
   if (userId && isAdmin == 'false') {
     reqrestList = await AddResReq.find({ userId: userId })
   } else if (userId && isAdmin == 'true') {
@@ -80,9 +85,9 @@ exports.resReqApproove = catchAsyncErrors(async (req, res) => {
   }
 
   await Restaurent.create(content)
-
   await AddResReq.findByIdAndUpdate(
     _id,
+    //DP: Spelling mistake.
     { status: "Approoved" }
   )
 
@@ -91,7 +96,7 @@ exports.resReqApproove = catchAsyncErrors(async (req, res) => {
     message: 'Resquest approoved successfully',
   })
 })
-
+//DP: There is no return in this function.
 exports.resReqDecline = catchAsyncErrors(async (req, res) => {
   const _id = req.params._id
   const { status } = req.body
